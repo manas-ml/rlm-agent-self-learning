@@ -1,0 +1,9 @@
+[project]
+name = "invoicekit"
+version = "0.2.0"
+requires-python = ">=3.10"
+dependencies = ["pytest"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]

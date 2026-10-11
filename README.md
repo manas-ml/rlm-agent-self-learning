@@ -8,14 +8,22 @@ The three claims under test (from the Prime Agent README):
 2. `/autonomous` with a user-defined quality gate stops only when work is verifiably done.
 3. `/refine` can make a second run cheaper than the first, and recorded snapshots allow rollback (`/refine rollback <id>`).
 
-## PoC kit
+## Layout
 
-The evaluation kit (two buggy Python fixtures, a quality gate and its self-test, a metrics script, a runbook and a report template) was removed from the working tree. It is still in git history:
+| Path | What |
+|------|------|
+| `RUNBOOK.md` | Copy-pasteable steps for runs 1-3; every command is labelled README / source / UNVERIFIED |
+| `fixture-a/`, `fixture-b/` | Two small billing libraries, each with 8 modules and 8 deliberate bugs (8 failing test files each) |
+| `gate.sh`, `gate_selftest.sh` | Quality gate (pytest passes, tests untouched, no skips, no new deps) and its proof of rejection |
+| `metrics.py` | `begin` / `finish` per run; appends a row to `results.csv` |
+| `REPORT_TEMPLATE.md`, `refine_log.md` | Evaluation template and `/refine` proposal log |
+| `setup_fixtures.sh` | Gives each fixture its own git repo with one "initial" commit |
+
+## Quick start
 
 ```bash
-git show 7a8a47c --stat           # list the files
-git checkout 7a8a47c -- poc       # restore poc/
-bash poc/setup_fixtures.sh        # recreate each fixture's own git repo
+bash setup_fixtures.sh    # required after every fresh clone: nested .git dirs are not stored in this repo
+bash gate_selftest.sh     # should end with "SELFTEST: ALL REJECTIONS PROVEN"
 ```
 
-Start with `poc/RUNBOOK.md`. It has not been run against a real `prime-agent` install, and it lists the commands it could not verify.
+Then follow `RUNBOOK.md`. It has not been run against a real `prime-agent` install.
