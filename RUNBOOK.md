@@ -32,7 +32,7 @@ Check: `prime-agent status` and `prime-agent doctor` [README].
 
 Prep once (outside the agent):
 ```bash
-# (from the repo root)
+# (run from the repo root)
 bash setup_fixtures.sh       # only after a fresh clone: recreates the fixtures' git repos
 bash gate_selftest.sh        # must end "SELFTEST: ALL REJECTIONS PROVEN"
 chmod a-w gate.sh gate_selftest.sh
@@ -42,8 +42,7 @@ cat results.csv 2>/dev/null  # absent on a clean checkout
 ## 2. Run 1 on fixture-a
 
 ```bash
-# (from the repo root)
-bash setup_fixtures.sh       # only after a fresh clone: recreates the fixtures' git repos
+# (run from the repo root)
 python3 metrics.py begin run1              # records the start time
 cd fixture-a && prime-agent
 ```
@@ -80,8 +79,7 @@ Spawn semantics [SRC `rlm/__init__.py`, `refinement/planner.rs`]: `rlm.spawn` re
 
 **e. Finish and measure**
 ```bash
-# (from the repo root)
-bash setup_fixtures.sh       # only after a fresh clone: recreates the fixtures' git repos
+# (run from the repo root)
 python3 metrics.py finish run1 fixture-a [--turns N --tokens N --subagents N]
 git -C fixture-a diff --stat
 git -C fixture-a diff          # review the full diff for the report
